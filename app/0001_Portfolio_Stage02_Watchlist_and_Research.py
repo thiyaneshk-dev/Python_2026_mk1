@@ -94,6 +94,38 @@ def get_stock_data(ticker):
             high_52w = None
             low_52w = None
         
+        def calculate_supertrend(data, period, multiplier):
+            """Calculate SuperTrend indicator"""
+            hl_avg = (data['High'] + data['Low']) / 2
+            atr = data['High'].sub(data['Low']).rolling(period).mean()
+            
+            basic_ub = hl_avg + multiplier * atr
+            basic_lb = hl_avg - multiplier * atr
+            
+            final_ub = [None] * len(data)
+            final_lb = [None] * len(data)
+            
+            for i in range(len(data)):
+                if i == 0:
+                    final_ub[i] = basic_ub.iloc[i]
+                    final_lb[i] = basic_lb.iloc[i]
+                else:
+                    final_ub[i] = basic_ub.iloc[i] if basic_ub.iloc[i] < final_ub[i-1] or data['Close'].iloc[i-1] > final_ub[i-1] else final_ub[i-1]
+                    final_lb[i] = basic_lb.iloc[i] if basic_lb.iloc[i] > final_lb[i-1] or data['Close'].iloc[i-1] < final_lb[i-1] else final_lb[i-1]
+            
+            supertrend = [None] * len(data)
+            for i in range(len(data)):
+                if i == 0:
+                    supertrend[i] = final_ub[i]
+                else:
+                    supertrend[i] = final_ub[i] if (supertrend[i-1] == final_ub[i-1] and data['Close'].iloc[i] <= final_ub[i]) else final_lb[i]
+            
+            return supertrend
+        
+        st_102 = calculate_supertrend(hist, 10, 2) if len(hist) > 10 else None
+        st_103 = calculate_supertrend(hist, 10, 3) if len(hist) > 10 else None
+        st_205 = calculate_supertrend(hist, 20, 5) if len(hist) > 20 else None
+        
         return {
             'symbol': symbol,
             'current_price': current_price,
@@ -102,6 +134,9 @@ def get_stock_data(ticker):
             'rsi': rsi_value,
             'high_52w': high_52w,
             'low_52w': low_52w,
+            'supertrend_102': st_102[-1] if st_102 and st_102[-1] else None,
+            'supertrend_103': st_103[-1] if st_103 and st_103[-1] else None,
+            'supertrend_205': st_205[-1] if st_205 and st_205[-1] else None,
             'pe_ratio': info.get('trailingPE'),
             'dividend_yield': info.get('dividendYield'),
             'market_cap': info.get('marketCap'),
@@ -113,7 +148,7 @@ def get_stock_data(ticker):
         return None
 
 def parse_watchlist_csv(uploaded_file):
-    """Parse watchlist CSV (simple: one ticker per line)"""
+    """Parse watchlist CSV (simple: one ticker per line, with or without .NS)"""
     try:
         df = pd.read_csv(uploaded_file, header=None, names=['ticker'])
         df['ticker'] = df['ticker'].astype(str).str.strip().str.upper()
@@ -121,7 +156,7 @@ def parse_watchlist_csv(uploaded_file):
         return df
     except Exception as e:
         st.error(f"❌ CSV parsing error: {str(e)}")
-        st.error("Expected format: One ticker per line (no header)")
+        st.error("Expected format: One ticker per line (e.g., ITC or ITC.NS)")
         return pd.DataFrame()
 
 def save_watchlist(watchlist_df):
