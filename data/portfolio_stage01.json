@@ -7,8 +7,8 @@
   },
   {
     "ticker": "GOLDBEES",
-    "shares": 59,
-    "buy_price": 106.81,
+    "shares": 78,
+    "buy_price": 109.37,
     "asset_type": "EQUITY"
   },
   {
@@ -37,8 +37,8 @@
   },
   {
     "ticker": "JUNIORBEES",
-    "shares": 6,
-    "buy_price": 742.24,
+    "shares": 8,
+    "buy_price": 742.46,
     "asset_type": "EQUITY"
   },
   {
@@ -49,8 +49,8 @@
   },
   {
     "ticker": "LIQUIDBEES",
-    "shares": 510,
-    "buy_price": 991.01,
+    "shares": 311,
+    "buy_price": 981.35,
     "asset_type": "EQUITY"
   },
   {
@@ -61,8 +61,8 @@
   },
   {
     "ticker": "NIFTYBEES",
-    "shares": 69,
-    "buy_price": 295.46,
+    "shares": 444,
+    "buy_price": 285.61,
     "asset_type": "EQUITY"
   },
   {
@@ -73,12 +73,12 @@
   },
   {
     "ticker": "RELIANCE",
-    "shares": 234,
-    "buy_price": 1289.38,
+    "shares": 310,
+    "buy_price": 1327.87,
     "asset_type": "EQUITY"
   },
   {
-    "ticker": "SGBD29VIII-GB",
+    "ticker": "SGBD29VIII",
     "shares": 21,
     "buy_price": 4715.05,
     "asset_type": "SGB"
@@ -90,7 +90,7 @@
     "asset_type": "SGB"
   },
   {
-    "ticker": "SGBMAY29I",
+    "ticker": "SGBMAY29I-GB",
     "shares": 70,
     "buy_price": 4701.87,
     "asset_type": "SGB"
@@ -102,15 +102,15 @@
     "asset_type": "SGB"
   },
   {
-    "ticker": "SGBSEP31II-GB",
+    "ticker": "SGBSEP31II",
     "shares": 34,
     "buy_price": 5873.0,
     "asset_type": "SGB"
   },
   {
     "ticker": "SILVERBEES",
-    "shares": 18,
-    "buy_price": 188.16,
+    "shares": 24,
+    "buy_price": 207.61,
     "asset_type": "EQUITY"
   },
   {
